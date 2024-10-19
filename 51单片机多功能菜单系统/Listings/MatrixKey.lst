@@ -1,0 +1,94 @@
+C51 COMPILER V9.54   MATRIXKEY                                                             09/16/2024 23:10:24 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MATRIXKEY
+OBJECT MODULE PLACED IN .\Objects\MatrixKey.obj
+COMPILER INVOKED BY: D:\Keil5 C51\C51\BIN\C51.EXE MatrixKey.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\MatrixKey.lst) OBJECT(.\Objects\MatrixKey.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          unsigned char Mar_KeyNumer;
+   3          
+   4          unsigned char MatrixKey_Key()
+   5          {
+   6   1              unsigned char Temp=0;
+   7   1              Temp=Mar_KeyNumer;
+   8   1              Mar_KeyNumer=0;
+   9   1              return Temp;
+  10   1      }
+  11          
+  12          unsigned char Mar_GetKeyState()
+  13          {
+  14   1              unsigned char KeyNumer=0;
+  15   1              P1=0xff;
+  16   1              P1_3=0;
+  17   1              if(P1_7==0){KeyNumer=1;}
+  18   1              if(P1_6==0){KeyNumer=5;}
+  19   1              if(P1_5==0){KeyNumer=9;}
+  20   1              if(P1_4==0){KeyNumer=13;}
+  21   1              
+  22   1              P1=0xff;
+  23   1              P1_2=0;
+  24   1              if(P1_7==0){KeyNumer=2;}
+  25   1              if(P1_6==0){KeyNumer=6;}
+  26   1              if(P1_5==0){KeyNumer=10;}
+  27   1              if(P1_4==0){KeyNumer=14;}
+  28   1              
+  29   1              P1=0xff;
+  30   1              P1_1=0;
+  31   1              if(P1_7==0){KeyNumer=3;}
+  32   1              if(P1_6==0){KeyNumer=7;}
+  33   1              if(P1_5==0){KeyNumer=11;}
+  34   1              if(P1_4==0){KeyNumer=15;}
+  35   1              
+  36   1              P1=0xff;
+  37   1              P1_0=0;
+  38   1              if(P1_7==0){KeyNumer=4;}
+  39   1              if(P1_6==0){KeyNumer=8;}
+  40   1              if(P1_5==0){KeyNumer=12;}
+  41   1              if(P1_4==0){KeyNumer=16;}       
+  42   1              
+  43   1              return KeyNumer;
+  44   1      }
+  45          
+  46          void MartrixKey_Loop()
+  47          {
+  48   1              static unsigned char NowState,LastState;
+  49   1              LastState=NowState;
+  50   1              NowState=Mar_GetKeyState();
+  51   1              if(LastState==1&&NowState==0){Mar_KeyNumer=1;}
+  52   1              if(LastState==2&&NowState==0){Mar_KeyNumer=2;}
+  53   1              if(LastState==3&&NowState==0){Mar_KeyNumer=3;}  
+  54   1              if(LastState==4&&NowState==0){Mar_KeyNumer=4;}  
+C51 COMPILER V9.54   MATRIXKEY                                                             09/16/2024 23:10:24 PAGE 2   
+
+  55   1              if(LastState==5&&NowState==0){Mar_KeyNumer=5;}  
+  56   1              if(LastState==6&&NowState==0){Mar_KeyNumer=6;}  
+  57   1              if(LastState==7&&NowState==0){Mar_KeyNumer=7;}  
+  58   1              if(LastState==8&&NowState==0){Mar_KeyNumer=8;}  
+  59   1              if(LastState==9&&NowState==0){Mar_KeyNumer=9;}  
+  60   1              if(LastState==10&&NowState==0){Mar_KeyNumer=10;}        
+  61   1              if(LastState==11&&NowState==0){Mar_KeyNumer=11;}        
+  62   1              if(LastState==12&&NowState==0){Mar_KeyNumer=12;}        
+  63   1              if(LastState==13&&NowState==0){Mar_KeyNumer=13;}        
+  64   1              if(LastState==14&&NowState==0){Mar_KeyNumer=14;}        
+  65   1              if(LastState==15&&NowState==0){Mar_KeyNumer=15;}        
+  66   1              if(LastState==16&&NowState==0){Mar_KeyNumer=16;}        
+  67   1      }
+  68          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    309    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

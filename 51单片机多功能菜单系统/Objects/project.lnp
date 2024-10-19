@@ -1,0 +1,12 @@
+".\Objects\main.obj",
+".\Objects\LCD1602.obj",
+".\Objects\MatrixKey.obj",
+".\Objects\Timer0.obj",
+".\Objects\Key.obj",
+".\Objects\Timer1.obj",
+".\Objects\DS18B20.obj",
+".\Objects\OneWrie.obj",
+".\Objects\XPT2406.obj" 
+TO ".\Objects\project" 
+PRINT(".\Listings\project.m51") RAMSIZE(256) 
+DISABLEWARNING (16) 

@@ -1,0 +1,116 @@
+C51 COMPILER V9.54   ONEWRIE                                                               09/16/2024 23:27:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE ONEWRIE
+OBJECT MODULE PLACED IN .\Objects\OneWrie.obj
+COMPILER INVOKED BY: D:\Keil5 C51\C51\BIN\C51.EXE OneWrie.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\OneWrie.lst) OBJECT(.\Objects\OneWrie.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          sbit OneWire_DQ=P3^7;
+   4          /**
+   5                  *@brief  OneWire初始化
+   6                  *@param  无
+   7                  *@retval 返回DQ总线的值
+   8          */
+   9          unsigned char OneWire_Init()
+  10          {
+  11   1              unsigned char i;
+  12   1              unsigned char AckBit;
+  13   1              EA=0;                      //关闭定时器全部中断
+  14   1              OneWire_DQ=1;              //先把总线拉高
+  15   1              OneWire_DQ=0;              //再把总线拉低
+  16   1              i = 247;while (--i);       //Delay500us
+  17   1              OneWire_DQ=1;              //释放总线
+  18   1              i = 32;while (--i);        //Delay70us
+  19   1              AckBit=OneWire_DQ;
+  20   1              i = 247;while (--i);       //Delay500us
+  21   1              EA=1;                      //打开定时器中断
+  22   1              return AckBit; 
+  23   1      }
+  24          /**
+  25                  *@brief  OneWire发送一位
+  26                  *@param  一位
+  27                  *@retval 无
+  28          */
+  29          void OneWire_SendBit(unsigned char Bit)
+  30          {
+  31   1              unsigned char i;
+  32   1              EA=0;                    //关闭定时器全部中断
+  33   1              OneWire_DQ=0;           //把总线拉低
+  34   1              i = 4;while (--i);      //Delay10us
+  35   1              OneWire_DQ=Bit;         //发送一位数据
+  36   1              i = 24;while (--i);     //Delay50us
+  37   1              OneWire_DQ=1;           //释放总线
+  38   1              EA=1;                   //打开定时器中断
+  39   1      }
+  40          /**
+  41                  *@brief  OneWire接收一位
+  42                  *@param  无
+  43                  *@retval 返回一位
+  44          */
+  45          unsigned char ReceiveBit()
+  46          {
+  47   1              unsigned char i;
+  48   1              unsigned char AckBit;
+  49   1              EA=0;                  //关闭定时器全部中断
+  50   1              OneWire_DQ=0;          //把总线拉低
+  51   1              i = 2;while (--i);     //Delay5us
+  52   1              OneWire_DQ=1;          //释放总线需要时间，所以释放完刚好到15us未尾
+  53   1              i = 2;while (--i);     //Delay5us
+  54   1              AckBit=OneWire_DQ;
+C51 COMPILER V9.54   ONEWRIE                                                               09/16/2024 23:27:51 PAGE 2   
+
+  55   1              i = 24;while (--i);    //Delay50us
+  56   1              EA=1;                  //打开定时器中断
+  57   1              return AckBit;
+  58   1              
+  59   1      }
+  60          /**
+  61                  *@brief  OneWire发送一个字节
+  62                  *@param  一个字节
+  63                  *@retval 无
+  64          */
+  65          void OneWire_SendByte(unsigned char Byte)
+  66          {
+  67   1              unsigned char i;
+  68   1              for(i=0;i<8;i++)
+  69   1              {
+  70   2                      OneWire_SendBit(Byte&(0x01<<i));//逐位进行发送
+  71   2              }
+  72   1      }
+  73          /**
+  74                  *@brief  OneWire接收一个字节
+  75                  *@param  无
+  76                  *@retval 返回一个字节
+  77          */
+  78          unsigned char OneWire_ReceiveByte()
+  79          {
+  80   1              unsigned char i;
+  81   1              unsigned char Byte=0x00;//初始化为0000 0000
+  82   1              for(i=0;i<8;i++)
+  83   1              {
+  84   2                      if(ReceiveBit())
+  85   2                      {
+  86   3                              Byte=Byte|(0x01<<i);//有1，则置1
+  87   3                      }
+  88   2              }
+  89   1              return Byte;
+  90   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    134    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
